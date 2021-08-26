@@ -205,11 +205,11 @@
                         radius: "55%",
                         center: ["50%", "60%"],
                         data: [
-                            { value: 335, name: "Direct" },
-                            { value: 310, name: "Email" },
-                            { value: 234, name: "Ad Networks" },
-                            { value: 135, name: "Video Ads" },
-                            { value: 1548, name: "Search Engines" }
+                            {value: 335, name: "Direct"},
+                            {value: 310, name: "Email"},
+                            {value: 234, name: "Ad Networks"},
+                            {value: 135, name: "Video Ads"},
+                            {value: 1548, name: "Search Engines"}
                         ],
                         emphasis: {
                             itemStyle: {
@@ -232,7 +232,7 @@
                     {
                         name: "nightingale model",
                         type: "pie",
-                        radius: [20,100],
+                        radius: [20, 100],
                         center: ["50%", "60%"],
                         roseType: 'area',
                         itemStyle: {
@@ -259,10 +259,11 @@
                 ]
             });
 
-            const table_data=ref({});
+            const table_data = ref({});
 
             return { line_option, pie_option1,pie_option2 };
         },
+
 
     });
 </script>

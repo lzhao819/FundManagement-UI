@@ -5,6 +5,7 @@ import store from './store'
 import installElementPlus from './plugins/element'
 import './assets/css/icon.css'
 import ECharts from 'vue-echarts'
+import axios from 'axios'
 
 const app = createApp(App)
 installElementPlus(app)
@@ -13,3 +14,4 @@ app
     .use(router)
     .mount('#app')
     .component('v-chart', ECharts)
+

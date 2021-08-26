@@ -1,5 +1,4 @@
 import request from '../utils/request';
-import axios from "axios";
 
 export const fetchData = query => {
     return request({
@@ -8,5 +7,3 @@ export const fetchData = query => {
         params: query
     });
 };
-
-
