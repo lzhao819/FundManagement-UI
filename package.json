@@ -25,7 +25,7 @@
     "@vitejs/plugin-vue": "^1.2.3",
     "@vue/compiler-sfc": "^3.1.2",
     "execa": "^5.1.1",
-    "vite": "^2.3.7"
+    "vite": "^2.5.1"
   },
   "browserslist": [
     "> 1%",
