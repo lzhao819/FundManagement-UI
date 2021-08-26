@@ -12,18 +12,7 @@
   <a href="https://github.com/lin-xin/vue-manage-system/releases">
  
 Framework: Vue3 + Element Plus
-[Click Here to View Main Page](https://lin-xin.gitee.io/example/work/)
-
-
-## 项目截图
-
-### 登录
-
-![Image text](https://github.com/lin-xin/manage-system/raw/master/screenshots/wms3.png)
-
-### 首页
-
-![Image text](https://github.com/lin-xin/manage-system/raw/master/screenshots/wms1.png)
+[Click Here to View Main Page](https://lzhao819.github.io/FundManagement-UI/)
 
 ## Contributors
 [Shuning Yi](https://github.com/uqrallJIO)
@@ -36,23 +25,23 @@ Framework: Vue3 + Element Plus
 
 [Lu Zhao](https://github.com/lzhao819)
 
-## Function
+## Functions
 
 -   [x] Sign In/Out
 -   [x] Dashboard
 -   [x] Form
 
-## 安装步骤
+## Install Steps
 
 ```
 git clone https://github.com/lzhao819/FundManagement-UI 
 
-npm install // 安装项目依赖
+npm install 
 
-npm run dev
+npm run dev// local
 
-// 执行构建命令，生成的dist文件夹放在服务器下即可访问
-npm run build
+npm run deploy// github page
+
 ```
 
 
