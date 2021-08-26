@@ -5,42 +5,15 @@
             <i v-if="!collapse" class="el-icon-s-fold"></i>
             <i v-else class="el-icon-s-unfold"></i>
         </div>
-<!--        <div class="el-image">-->
-<!--          <el-image  :src="require('../assets/img/citibank.jpg')"  fit="cover"></el-image>-->
-<!--        </div>-->
-
-        <div class="logo">后台管理系统</div>
+        <div class="logo">Fund Manager</div>
         <div class="header-right">
             <div class="header-user-con">
                 <!-- 消息中心 -->
                 <div class="btn-bell">
-                    <el-tooltip effect="dark" :content="message?`有${message}条未读消息`:`消息中心`" placement="bottom">
-                        <router-link to="/tabs">
-                            <i class="el-icon-bell"></i>
-                        </router-link>
+                    <el-tooltip effect="dark" placement="bottom">
+                        <router-link to="/tabs"></router-link>
                     </el-tooltip>
-                    <span class="btn-bell-badge" v-if="message"></span>
                 </div>
-                <!-- 用户头像 -->
-                <div class="user-avator">
-                    <img src="../assets/img/img.jpg" />
-                </div>
-                <!-- 用户名下拉菜单 -->
-                <el-dropdown class="user-name" trigger="click" @command="handleCommand">
-                    <span class="el-dropdown-link">
-                        {{username}}
-                        <i class="el-icon-caret-bottom"></i>
-                    </span>
-                    <template #dropdown>
-                        <el-dropdown-menu>
-                            <a href="https://github.com/lin-xin/vue-manage-system" target="_blank">
-                                <el-dropdown-item>项目仓库</el-dropdown-item>
-                            </a>
-                            <el-dropdown-item command="user">个人中心</el-dropdown-item>
-                            <el-dropdown-item divided command="loginout">退出登录</el-dropdown-item>
-                        </el-dropdown-menu>
-                    </template>
-                </el-dropdown>
             </div>
         </div>
     </div>
@@ -51,9 +24,6 @@ import { useStore } from "vuex";
 import { useRouter } from "vue-router";
 export default {
     setup() {
-        const username = localStorage.getItem("ms_username");
-        const message = 2;
-
         const store = useStore();
         const collapse = computed(() => store.state.collapse);
         // 侧边栏折叠
@@ -69,21 +39,10 @@ export default {
 
         // 用户名下拉菜单选择事件
         const router = useRouter();
-        const handleCommand = (command) => {
-            if (command == "loginout") {
-                localStorage.removeItem("ms_username");
-                router.push("/login");
-            } else if (command == "user") {
-                router.push("/user");
-            }
-        };
 
         return {
-            username,
-            message,
             collapse,
             collapseChage,
-            handleCommand,
         };
     },
 };
@@ -97,18 +56,12 @@ export default {
     font-size: 22px;
     color: #fff;
 }
-
-.el-image{
-  height:50px;
-}
-
 .collapse-btn {
     float: left;
     padding: 0 21px;
     cursor: pointer;
     line-height: 70px;
 }
-
 .header .logo {
     float: left;
     width: 250px;

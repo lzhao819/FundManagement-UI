@@ -11,13 +11,13 @@
         <div class="tags-close-box">
             <el-dropdown @command="handleTags">
                 <el-button size="mini" type="primary">
-                    标签选项
+                    Tab Options
                     <i class="el-icon-arrow-down el-icon--right"></i>
                 </el-button>
                 <template #dropdown>
                     <el-dropdown-menu size="small">
-                        <el-dropdown-item command="other">关闭其他</el-dropdown-item>
-                        <el-dropdown-item command="all">关闭所有</el-dropdown-item>
+                        <el-dropdown-item command="other">Close Others</el-dropdown-item>
+                        <el-dropdown-item command="all">Close All</el-dropdown-item>
                     </el-dropdown-menu>
                 </template>
             </el-dropdown>
@@ -40,7 +40,6 @@ export default {
         const store = useStore();
         const tagsList = computed(() => store.state.tagsList);
         const showTags = computed(() => tagsList.value.length > 0);
-        console.log(showTags)
 
         // 关闭单个标签
         const closeTags = (index) => {

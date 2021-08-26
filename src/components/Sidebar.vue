@@ -46,18 +46,14 @@ export default {
           {
             icon: "el-icon-lx-cascades",
             index: "/table",
-            title: "卖出",
+            title: "Sold Out",
           },
           {
             icon: "el-icon-lx-copy",
             index: "/tabs",
-            title: "买入",
+            title: "Buy In",
           },
-
-
-
-        ];
-
+          ];
         const route = useRoute();
 
         const onRoutes = computed(() => {
@@ -77,7 +73,7 @@ export default {
 </script>
 
 <style scoped>
-.sidebar {
+    .sidebar {
     display: block;
     position: absolute;
     left: 0;

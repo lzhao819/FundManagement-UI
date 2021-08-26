@@ -3,52 +3,52 @@
     <div class="crumbs">
       <el-breadcrumb separator="/">
         <el-breadcrumb-item>
-          <i class="el-icon-lx-calendar"></i> 买入
+          <i class="el-icon-lx-calendar"></i> Buy In
         </el-breadcrumb-item>
-        <el-breadcrumb-item>交易信息</el-breadcrumb-item>
+        <el-breadcrumb-item>Transaction Info</el-breadcrumb-item>
       </el-breadcrumb>
     </div>
     <div class="container">
       <div class="form-box">
         <el-form ref="formRef" :rules="rules" :model="form" label-width="80px">
-          <el-form-item label="基金名称" prop="name">
+          <el-form-item label="fund name" prop="name">
 <!--            <el-input v-model="form.name"></el-input>-->
-            <el-select v-model="form.region" placeholder="请选择基金">
+            <el-select v-model="form.region" placeholder="please choose fund">
               <el-option key="bbk" label="fund1" value="bbk"></el-option>
               <el-option key="xtc" label="fund2" value="xtc"></el-option>
               <el-option key="imoo" label="fund3" value="imoo"></el-option>
             </el-select>
           </el-form-item>
           <el-form-item label="security" prop="region">
-            <el-select v-model="form.security" placeholder="请选择">
+            <el-select v-model="form.region" placeholder="choose">
               <el-option key="bbk" label="1" value="bbk"></el-option>
               <el-option key="xtc" label="2" value="xtc"></el-option>
               <el-option key="imoo" label="3" value="imoo"></el-option>
             </el-select>
           </el-form-item>
           <el-form-item label="position" prop="region">
-            <el-select v-model="form.position" placeholder="请选择">
-              <el-option key="bei" label="北京" value="北京"></el-option>
-              <el-option key="xtc" label="上海" value="上海"></el-option>
-              <el-option key="imoo" label="广州" value="广州"></el-option>
+            <el-select v-model="form.region" placeholder="choose">
+              <el-option key="bbk" label="1" value="bbk"></el-option>
+              <el-option key="xtc" label="2" value="xtc"></el-option>
+              <el-option key="imoo" label="3" value="imoo"></el-option>
             </el-select>
           </el-form-item>
-          <el-form-item label="日期时间">
-<!--            <el-col :span="11">-->
+          <el-form-item label="Date">
+            <el-col :span="11">
               <el-form-item prop="date1">
-                <el-date-picker type="date" placeholder="选择日期" v-model="form.date1"
+                <el-date-picker type="date" placeholder="choose date" v-model="form.date1"
                                 style="width: 100%;"></el-date-picker>
               </el-form-item>
-<!--            </el-col>-->
-<!--            <el-col class="line" :span="2">-</el-col>-->
-<!--            <el-col :span="11">-->
-<!--              <el-form-item prop="date2">-->
-<!--                <el-time-picker placeholder="选择时间" v-model="form.date2" style="width: 100%;">-->
-<!--                </el-time-picker>-->
-<!--              </el-form-item>-->
-<!--            </el-col>-->
+            </el-col>
+            <el-col class="line" :span="2">-</el-col>
+            <el-col :span="11">
+              <el-form-item prop="date2">
+                <el-time-picker placeholder="choose date" v-model="form.date2" style="width: 100%;">
+                </el-time-picker>
+              </el-form-item>
+            </el-col>
           </el-form-item>
-          <el-form-item label="股数"  prop="options">
+          <el-form-item label="quantity"  prop="options">
             <el-input-number></el-input-number>
           </el-form-item>
 <!--          <el-form-item label="选择开关" prop="delivery">-->
@@ -68,11 +68,11 @@
 <!--              <el-radio label="imoo"></el-radio>-->
 <!--            </el-radio-group>-->
 <!--          </el-form-item>-->
-          <el-form-item label="备注" prop="desc">
+          <el-form-item label="more info" prop="desc">
             <el-input type="textarea" rows="5" v-model="form.desc"></el-input>
           </el-form-item>
           <el-form-item>
-            <el-button type="primary" @click="onSubmit">买入</el-button>
+            <el-button type="primary" @click="onSubmit">Buy In</el-button>
 <!--            <el-button @click="onReset">重置表单</el-button>-->
           </el-form-item>
         </el-form>
@@ -143,7 +143,7 @@ export default {
     ];
     const rules = {
       name: [
-        // { required: true, message: "请输入表单名称", trigger: "blur" },
+        { required: true, message: "请输入表单名称", trigger: "blur" },
       ],
     };
     const formRef = ref(null);
@@ -157,17 +157,14 @@ export default {
       resource: "小天才",
       desc: "",
       options: [],
-      security: "",
-      position: "",
     });
 
     // 提交
     const onSubmit = () => {
       // 表单校验
-      // formRef.value.validate((valid) => {
-      //   if (valid) {
-          console.log(form.position)
-          axios.post('http://localhost:8080/positions/'+ getPositionType(form.position), {
+      formRef.value.validate((valid) => {
+        if (valid) {
+          axios.post('/positions/'+ 1, {
             security_id: 1,  //API测试后改为form.date
             position_id: 1,
             quantity: 666,
@@ -176,44 +173,23 @@ export default {
           })
               .then(function (response) {
                 console.log(response);
-                // ElMessage.success("买入成功");
-                // console.log(form);
-                ElMessage.success("提交成功！");
+                ElMessage.success("买入成功");
                 // tableData.value.splice(index, 1);
               })
               .catch(function (error) {
                 console.log(error);
               });
-
-        // } else {
-        //   return false;
-        // }
-      // });
+          console.log(form);
+          ElMessage.success("提交成功！");
+        } else {
+          return false;
+        }
+      });
     };
     // 重置
     const onReset = () => {
       formRef.value.resetFields();
     };
-    const getSecurityType = (type) => {
-      const map = new Map([
-        ['', 1],
-        ['', 2],
-        ['', 3],
-
-      ])
-      return map.get(type)
-
-    }
-
-    const getPositionType =(type)=> {
-      const map = new Map([
-        ['北京', 1],
-        ['上海', 2],
-        ['广州', 3],
-
-      ])
-      return map.get(type)
-    }
     return {
       options,
       rules,

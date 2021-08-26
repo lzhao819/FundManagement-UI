@@ -4,22 +4,17 @@
             <el-col :span="8">
                 <el-card shadow="hover" style="height:100%;">
                     <template #header>
-                        <div class="clearfix">
-                            <span>List Of Fund Records</span>
-                        </div>
+                        <div class="clearfix">Fund List</div>
                     </template>
-                    <el-list>
-                        <div class="clearfix">
-                            3
-                        </div>
-                        <div class="clearfix">
-                            2
-                        </div>
-                        <div class="clearfix">
-                            1
-                        </div>
-
-                    </el-list>
+                    <el-table :data="tableData" border class="table" style="background-color: #e9eaec;" ref="multipleTable" header-cell-class-name="table-header">
+                        <el-table-column prop="name" label="Fund Name"></el-table-column>
+                        <el-table-column label="Price">
+                            <template #default="scope">${{ scope.row.money }}</template>
+                        </el-table-column>
+                        <el-table-column label="Change">
+                            <template>$</template>
+                        </el-table-column>
+                    </el-table>
                 </el-card>
             </el-col>
             <el-col :span="16">
@@ -29,7 +24,7 @@
                             <div class="grid-content grid-con-2">
                                 <i class="el-icon-message-solid grid-con-icon"></i>
                                 <div class="grid-cont-right">
-                                    <div class="grid-num">17</div>
+                                    <div class="grid-num">{{fund_quant}}</div>
                                     <div>Funds</div>
                                 </div>
                             </div>
@@ -48,12 +43,12 @@
                     </el-col>
                 </el-row>
 
-                <el-card shadow="hover">
+                <el-card shadow="hover" style="height:400px;">
                     <template #header>
-                        <div class="clearfix"></div>
+                        <div class="clearfix">Security-Quantity Date List</div>
                     </template>
                     <div class="verify-line">
-                      <v-chart class="chart" :option="line_option"></v-chart>
+                        <v-chart class="chart" :option="line_option" autoresize/>
                     </div>
                 </el-card>
 
@@ -61,17 +56,17 @@
                     <el-col :span="12">
                         <el-card shadow="hover">
                             <template #header>
-                                <div class="clearfix"></div>
+                                <div class="clearfix">Security-Quantity Pie(per user)</div>
                             </template>
-                            <v-chart class="chart" :option="pie_option" autoresize/>
+                            <v-chart class="chart" :option="pie_option1" autoresize/>
                         </el-card>
                     </el-col>
                     <el-col :span="12">
                         <el-card shadow="hover">
                             <template #header>
-                                <div class="clearfix"></div>
+                                <div class="clearfix">Security-Quantity Pie(per list)</div>
                             </template>
-                            <v-chart class="chart" :option="pie_option" autoresize/>
+                            <v-chart class="chart" :option="pie_option2" style="" autoresize/>
                         </el-card>
                     </el-col>
                 </el-row>
@@ -85,10 +80,14 @@
     import { use } from "echarts/core";
     import { CanvasRenderer } from "echarts/renderers";
     import { PieChart } from "echarts/charts";
+    import { LineChart, } from "echarts/charts";
     import {
         TitleComponent,
+        GridComponent,
         TooltipComponent,
-        LegendComponent
+        LegendComponent,
+        AxisPointerComponent,
+
     } from "echarts/components";
     import VChart, { THEME_KEY } from "vue-echarts";
 
@@ -97,25 +96,31 @@
     use([
         CanvasRenderer,
         PieChart,
+        LineChart,
+        GridComponent,
+        AxisPointerComponent,
         TitleComponent,
         TooltipComponent,
         LegendComponent
     ]);
 
     export default defineComponent({
-        name: "HelloWorld",
+        name: "charts",
         components: {VChart},
         provide: {[THEME_KEY]: "light"},
         setup() {
             const line_option = ref({
-                title: {
-                    text: 'Stacked area line chart'
-                },
                 tooltip: {
                     trigger: 'axis',
                 },
                 legend: {
-                    data: 'Line 1'
+                    data: ['邮件营销', '联盟广告', '视频广告', '直接访问', '搜索引擎']
+                },
+                grid: {
+                    left: '3%',
+                    right: '4%',
+                    bottom: '3%',
+                    containLabel: true
                 },
                 xAxis: [
                     {
@@ -131,19 +136,59 @@
                 ],
                 series: [
                     {
-                        name: 'Line 1',
+                        name: '邮件营销',
                         type: 'line',
-                        smooth: true,
-                        data: [140, 232, 101, 264, 90, 340, 250]
+                        stack: '总量',
+                        areaStyle: {},
+                        emphasis: {focus: 'series'},
+                        data: [120, 132, 101, 134, 90, 230, 210]
+                    },
+                    {
+                        name: '联盟广告',
+                        type: 'line',
+                        stack: '总量',
+                        areaStyle: {},
+                        emphasis: {focus: 'series'},
+                        data: [220, 182, 191, 234, 290, 330, 310]
+                    },
+                    {
+                        name: '视频广告',
+                        type: 'line',
+                        stack: '总量',
+                        areaStyle: {},
+                        emphasis: {
+                            focus: 'series'
+                        },
+                        data: [150, 232, 201, 154, 190, 330, 410]
+                    },
+                    {
+                        name: '直接访问',
+                        type: 'line',
+                        stack: '总量',
+                        areaStyle: {},
+                        emphasis: {
+                            focus: 'series'
+                        },
+                        data: [320, 332, 301, 334, 390, 330, 320]
+                    },
+                    {
+                        name: '搜索引擎',
+                        type: 'line',
+                        stack: '总量',
+                        label: {
+                            show: true,
+                            position: 'top'
+                        },
+                        areaStyle: {},
+                        emphasis: {
+                            focus: 'series'
+                        },
+                        data: [820, 932, 901, 934, 1290, 1330, 1320]
                     }
                 ]
             });
 
-            const pie_option = ref({
-                title: {
-                    text: "Traffic Sources",
-                    left: "center"
-                },
+            const pie_option1 = ref({
                 tooltip: {
                     trigger: "item",
                     formatter: "{a} <br/>{b} : {c} ({d}%)"
@@ -177,8 +222,48 @@
                 ]
             });
 
-            return { line_option, pie_option };
-        }
+            const pie_option2 = ref({
+                legend: {
+                    orient: "vertical",
+                    left: "left",
+                    data: ["r1", "r2", "r3", "r4", "r5", "r6", "r7", "r8"]
+                },
+                series: [
+                    {
+                        name: "nightingale model",
+                        type: "pie",
+                        radius: [20,100],
+                        center: ["50%", "60%"],
+                        roseType: 'area',
+                        itemStyle: {
+                            borderRadius: 6
+                        },
+                        data: [
+                            {value: 90, name: 'r1'},
+                            {value: 60, name: 'r2'},
+                            {value: 62, name: 'r3'},
+                            {value: 50, name: 'r4'},
+                            {value: 45, name: 'r5'},
+                            {value: 36, name: 'r6'},
+                            {value: 12, name: 'r7'},
+                            {value: 11, name: 'r8'}
+                        ],
+                        emphasis: {
+                            itemStyle: {
+                                shadowBlur: 10,
+                                shadowOffsetX: 0,
+                                shadowColor: "rgba(0, 0, 0, 0.5)"
+                            }
+                        }
+                    }
+                ]
+            });
+
+            const table_data=ref({});
+
+            return { line_option, pie_option1,pie_option2 };
+        },
+
     });
 </script>
 
@@ -238,14 +323,6 @@
         color: darksalmon;
     }
 
-    .user-info {
-        display: flex;
-        align-items: center;
-        padding-bottom: 20px;
-        border-bottom: 2px solid #ccc;
-        margin-bottom: 20px;
-    }
-
     .user-info-cont div:first-child {
         font-size: 30px;
         color: #222;
@@ -257,6 +334,21 @@
 
     .mgb20 {
         margin-bottom: 20px;
+    }
+    .fund_menu{
+        height:50px;
+        text-color:#333333;
+        border-radius: 5px;
+        border-bottom:1px solid #999999;
+    }
+    .ct{
+        padding:30px 20px 0;
+    }
+    .rt{
+        display: inline-block;
+        font: normal normal normal 14px/1 FontAwesome;
+        font-size: inherit;
+        text-rendering: auto;
     }
 
     body {
