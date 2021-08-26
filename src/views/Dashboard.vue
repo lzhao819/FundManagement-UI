@@ -35,7 +35,7 @@
                             <div class="grid-content grid-con-3">
                                 <i class="el-icon-s-goods grid-con-icon"></i>
                                 <div class="grid-cont-right">
-                                    <div class="grid-num">4</div>
+                                    <el-form v-model="security_quant" class="grid-num"></el-form>
                                     <div>Securities</div>
                                 </div>
                             </div>
@@ -92,6 +92,7 @@
     import VChart, { THEME_KEY } from "vue-echarts";
 
     import { ref, defineComponent } from "vue";
+    import axios from "axios";
 
     use([
         CanvasRenderer,
@@ -104,11 +105,25 @@
         LegendComponent
     ]);
 
+    var fund_quant;
+    var security_quant;
+        
     export default defineComponent({
         name: "charts",
         components: {VChart},
         provide: {[THEME_KEY]: "light"},
+        beforeCreate(){
+            axios.get(`http://localhost:8080/managers/1/fundQuant`)
+                .then(function (resp) {
+                    fund_quant=resp.data;
+                    console.log(fund_quant);
+                    security_quant=1;
+                })
+                return {fund_quant, security_quant};
+        },
+    
         setup() {
+
             const line_option = ref({
                 tooltip: {
                     trigger: 'axis',
@@ -259,11 +274,14 @@
                 ]
             });
 
-            const table_data = ref({});
-
-            return { line_option, pie_option1,pie_option2 };
+            // axios.get(`http://localhost:8080/managers/1/quantityQuant`)
+            //     .then(function (resp) {
+            //         quantity_quant=resp.data;
+            //         console.log(quantity_quant);
+            //     })
+        return{ line_option, pie_option1,pie_option2 };
         },
-
+       
 
     });
 </script>
