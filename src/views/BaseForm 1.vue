@@ -167,7 +167,7 @@ export default {
       // formRef.value.validate((valid) => {
       //   if (valid) {
           console.log(form.position)
-          axios.post('http://localhost:8080/positions/'+ getPositionType(form.position), {
+          axios.post('localhost:8080/positions/'+ getPositionType(form.position), {
             security_id: 1,  //API测试后改为form.date
             position_id: 1,
             quantity: 666,
