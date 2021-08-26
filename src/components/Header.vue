@@ -5,6 +5,10 @@
             <i v-if="!collapse" class="el-icon-s-fold"></i>
             <i v-else class="el-icon-s-unfold"></i>
         </div>
+<!--        <div class="el-image">-->
+<!--          <el-image  :src="require('../assets/img/citibank.jpg')"  fit="cover"></el-image>-->
+<!--        </div>-->
+
         <div class="logo">后台管理系统</div>
         <div class="header-right">
             <div class="header-user-con">
@@ -93,12 +97,18 @@ export default {
     font-size: 22px;
     color: #fff;
 }
+
+.el-image{
+  height:50px;
+}
+
 .collapse-btn {
     float: left;
     padding: 0 21px;
     cursor: pointer;
     line-height: 70px;
 }
+
 .header .logo {
     float: left;
     width: 250px;

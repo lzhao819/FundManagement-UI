@@ -14,14 +14,14 @@ const routes = [
                 path: "/dashboard",
                 name: "dashboard",
                 meta: {
-                    title: '系统首页'
+                    title: 'Dashboard'
                 },
                 component: () => import ( /* webpackChunkName: "dashboard" */ "../views/Dashboard.vue")
             }, {
                 path: "/table",
                 name: "basetable",
                 meta: {
-                    title: '表格'
+                    title: '卖出'
                 },
                 component: () => import ( /* webpackChunkName: "table" */ "../views/BaseTable.vue")
             }, {
@@ -42,9 +42,9 @@ const routes = [
                 path: "/tabs",
                 name: "tabs",
                 meta: {
-                    title: 'tab标签'
+                    title: '买入'
                 },
-                component: () => import ( /* webpackChunkName: "tabs" */ "../views/Tabs.vue")
+                component: () => import ( /* webpackChunkName: "tabs" */ "../views/BaseForm.vue")
             }, {
                 path: "/donate",
                 name: "donate",

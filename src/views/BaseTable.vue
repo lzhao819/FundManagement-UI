@@ -3,51 +3,53 @@
         <div class="crumbs">
             <el-breadcrumb separator="/">
                 <el-breadcrumb-item>
-                    <i class="el-icon-lx-cascades"></i> 基础表格
+                    <i class="el-icon-lx-cascades"></i> 卖出交易
                 </el-breadcrumb-item>
             </el-breadcrumb>
         </div>
         <div class="container">
             <div class="handle-box">
-                <el-select v-model="query.address" placeholder="地址" class="handle-select mr10">
-                    <el-option key="1" label="广东省" value="广东省"></el-option>
-                    <el-option key="2" label="湖南省" value="湖南省"></el-option>
-                </el-select>
-                <el-input v-model="query.name" placeholder="用户名" class="handle-input mr10"></el-input>
+<!--                <el-select v-model="query.address" placeholder="地址" class="handle-select mr10">-->
+<!--                    <el-option key="1" label="广东省" value="广东省"></el-option>-->
+<!--                    <el-option key="2" label="湖南省" value="湖南省"></el-option>-->
+<!--                </el-select>-->
+                <el-input v-model="query.name" placeholder="manager_id" class="handle-input mr10"></el-input>
                 <el-button type="primary" icon="el-icon-search" @click="handleSearch">搜索</el-button>
             </div>
             <el-table :data="tableData" border class="table" ref="multipleTable" header-cell-class-name="table-header">
-                <el-table-column prop="id" label="ID" width="55" align="center"></el-table-column>
-                <el-table-column prop="name" label="用户名"></el-table-column>
-                <el-table-column label="账户余额">
-                    <template #default="scope">￥{{ scope.row.money }}</template>
-                </el-table-column>
-                <el-table-column label="头像(查看大图)" align="center">
-                    <template #default="scope">
-                        <el-image class="table-td-thumb" :src="scope.row.thumb" :preview-src-list="[scope.row.thumb]">
-                        </el-image>
-                    </template>
-                </el-table-column>
-                <el-table-column prop="address" label="地址"></el-table-column>
-                <el-table-column label="状态" align="center">
-                    <template #default="scope">
-                        <el-tag :type="
-                                scope.row.state === '成功'
-                                    ? 'success'
-                                    : scope.row.state === '失败'
-                                    ? 'danger'
-                                    : ''
-                            ">{{ scope.row.state }}</el-tag>
-                    </template>
-                </el-table-column>
 
-                <el-table-column prop="date" label="注册时间"></el-table-column>
+                <el-table-column prop="id" label="ID" width="55" align="center"></el-table-column>
+                <el-table-column prop="name" label="基金名称"></el-table-column>
+
+<!--                <el-table-column label="头像(查看大图)" align="center">-->
+<!--                    <template #default="scope">-->
+<!--                        <el-image class="table-td-thumb" :src="scope.row.thumb" :preview-src-list="[scope.row.thumb]">-->
+<!--                        </el-image>-->
+<!--                    </template>-->
+<!--                </el-table-column>-->
+                <el-table-column prop="address" label="manager名字"></el-table-column>
+<!--                <el-table-column label="状态" align="center">-->
+<!--                    <template #default="scope">-->
+<!--                        <el-tag :type="-->
+<!--                                scope.row.state === '成功'-->
+<!--                                    ? 'success'-->
+<!--                                    : scope.row.state === '失败'-->
+<!--                                    ? 'danger'-->
+<!--                                    : ''-->
+<!--                            ">{{ scope.row.state }}</el-tag>-->
+<!--                    </template>-->
+<!--                </el-table-column>-->
+
+                <el-table-column prop="date" label="交易时间"></el-table-column>
+                <el-table-column label="交易数量">
+                 <template #default="scope">{{ scope.row.money }}</template>
+                </el-table-column>
                 <el-table-column label="操作" width="180" align="center">
                     <template #default="scope">
                         <el-button type="text" icon="el-icon-edit" @click="handleEdit(scope.$index, scope.row)">编辑
                         </el-button>
                         <el-button type="text" icon="el-icon-delete" class="red"
-                            @click="handleDelete(scope.$index, scope.row)">删除</el-button>
+                            @click="handleDelete(scope.$index, scope.row)">卖出</el-button>
                     </template>
                 </el-table-column>
             </el-table>
@@ -81,6 +83,7 @@
 import { ref, reactive } from "vue";
 import { ElMessage, ElMessageBox } from "element-plus";
 import { fetchData } from "../api/index";
+import axios from "axios";
 
 export default {
     name: "basetable",
@@ -94,19 +97,28 @@ export default {
         const tableData = ref([]);
         const pageTotal = ref(0);
         // 获取表格数据
-        const getData = () => {
-            fetchData(query).then((res) => {
-                tableData.value = res.list;
-                pageTotal.value = res.pageTotal || 50;
-            });
+        const getData = () => {              //获取manager_info请求
+          axios.get('/positions/'+ 1)   //修改获取Manager_info的API
+              .then(function (res) {
+                console.log(res);
+                tableData.value = res.data;
+              })
+              .catch(function (error) {
+                console.log(error);
+              });
+            // fetchData(query).then((res) => {
+            //     tableData.value = res.list;
+                // pageTotal.value = res.pageTotal || 50;
+            // });
         };
         getData();
 
         // 查询操作
         const handleSearch = () => {
-            query.pageIndex = 1;
+            // query.pageIndex = 1;
             getData();
         };
+
         // 分页导航
         const handlePageChange = (val) => {
             query.pageIndex = val;
@@ -116,12 +128,27 @@ export default {
         // 删除操作
         const handleDelete = (index) => {
             // 二次确认删除
-            ElMessageBox.confirm("确定要删除吗？", "提示", {
+            ElMessageBox.confirm("确定要卖出吗？", "提示", {
                 type: "warning",
             })
                 .then(() => {
-                    ElMessage.success("删除成功");
-                    tableData.value.splice(index, 1);
+                  axios.post('/positions/'+ 1, {
+                    security_id: 1,
+                    position_id: 1,
+                    quantity: 666,
+                    date_purchased: '2021-08-25',
+                    funds_fund_id: 1
+                  })
+                      .then(function (response) {
+                        console.log(response);
+                        ElMessage.success("卖出成功");
+                        tableData.value.splice(index, 1);
+                      })
+                      .catch(function (error) {
+                        console.log(error);
+                      });
+
+
                 })
                 .catch(() => {});
         };
@@ -147,6 +174,27 @@ export default {
                 tableData.value[idx][item] = form[item];
             });
         };
+        
+        const getSecurityType = (type) => {
+          const map = new Map([
+              ['', 1],
+              ['', 2],
+              ['', 3],
+
+          ])
+          return map.get(type)
+          
+        }
+
+        const getPositionType =(type)=> {
+          const map = new Map([
+            ['北京', 1],
+            ['上海', 2],
+            ['广州', 3],
+
+          ])
+          return map.get(type)
+        }
 
         return {
             query,

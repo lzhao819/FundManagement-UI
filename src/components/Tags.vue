@@ -40,6 +40,7 @@ export default {
         const store = useStore();
         const tagsList = computed(() => store.state.tagsList);
         const showTags = computed(() => tagsList.value.length > 0);
+        console.log(showTags)
 
         // 关闭单个标签
         const closeTags = (index) => {
