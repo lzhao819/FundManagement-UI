@@ -27,7 +27,7 @@
 <!--                        </el-image>-->
 <!--                    </template>-->
 <!--                </el-table-column>-->
-                <el-table-column prop="LastName" label="manager name"></el-table-column>
+                <el-table-column prop="lastName" label="manager name"></el-table-column>
 <!--                <el-table-column label="状态" align="center">-->
 <!--                    <template #default="scope">-->
 <!--                        <el-tag :type="-->
