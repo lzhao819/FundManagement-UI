@@ -1,37 +1,42 @@
 <template>
     <div>
         <el-row :gutter="20">
+            <el-col :span="8">
+                <el-card shadow="hover" style="height:100%;">
+                    <template #header>
+                        <div class="clearfix">Fund List</div>
+                    </template>
+                    <el-table :data="tableData" border class="table" style="background-color: #e9eaec;" ref="multipleTable" header-cell-class-name="table-header">
+                        <el-table-column prop="name" label="Fund Name"></el-table-column>
+                        <el-table-column label="Price">
+                            <template #default="scope">${{ scope.row.money }}</template>
+                        </el-table-column>
+                        <el-table-column label="Change">
+                            <template>$</template>
+                        </el-table-column>
+                    </el-table>
+                </el-card>
+            </el-col>
             <el-col :span="16">
                 <el-row :gutter="20" class="mgb20">
-                    <el-col :span="8">
+                    <el-col :span="12">
                         <el-card shadow="hover" :body-style="{ padding: '0px' }">
                             <div class="grid-content grid-con-2">
-                                <i class="el-icon-lx-punch grid-con-icon"></i>
+                                <i class="el-icon-message-solid grid-con-icon"></i>
                                 <div class="grid-cont-right">
-                                    <div class="grid-num">18</div>
+                                    <div class="grid-num">{{fund_quant}}</div>
                                     <div>Funds</div>
                                 </div>
                             </div>
                         </el-card>
                     </el-col>
-                    <el-col :span="8">
+                    <el-col :span="12">
                         <el-card shadow="hover" :body-style="{ padding: '0px' }">
                             <div class="grid-content grid-con-3">
-                                <i class="el-icon-lx-apps grid-con-icon"></i>
+                                <i class="el-icon-s-goods grid-con-icon"></i>
                                 <div class="grid-cont-right">
-                                    <div class="grid-num">6</div>
+                                    <div class="grid-num">{{security_quant}}</div>
                                     <div>Securities</div>
-                                </div>
-                            </div>
-                        </el-card>
-                    </el-col>
-                    <el-col :span="8">
-                        <el-card shadow="hover" :body-style="{ padding: '0px' }">
-                            <div class="grid-content grid-con-1">
-                                <i class="el-icon-lx-group grid-con-icon"></i>
-                                <div class="grid-cont-right">
-                                    <div class="grid-num">7</div>
-                                    <div>managers</div>
                                 </div>
                             </div>
                         </el-card>
@@ -40,7 +45,7 @@
 
                 <el-card shadow="hover" style="height:400px;">
                     <template #header>
-                        <div class="clearfix">Security-Quantity Date List(per user)</div>
+                        <div class="clearfix">Security-Quantity Date List</div>
                     </template>
                     <div class="verify-line">
                         <v-chart class="chart" :option="line_option" autoresize/>
@@ -59,28 +64,12 @@
                     <el-col :span="12">
                         <el-card shadow="hover">
                             <template #header>
-                                <div class="clearfix">Security-Quantity Pie(per fund)</div>
+                                <div class="clearfix">Security-Quantity Pie(per list)</div>
                             </template>
                             <v-chart class="chart" :option="pie_option2" style="" autoresize/>
                         </el-card>
                     </el-col>
                 </el-row>
-            </el-col>
-            <el-col :span="8">
-                <el-card shadow="hover" style="height:930px;overflow: scroll;">
-                    <table class="pure-table">
-                        <thead>
-                        <th>fund name</th>
-                        <th>price</th>
-                        <th>change</th>
-                        </thead>
-                        <tbody v-for="fund in funds">
-                        <td style="font-size: 12px;">{{fund.name}}</td>
-                        <td style="color: navy">{{fund.price}}</td>
-                        <td style="color: darkgrey"> {{fund.change}}</td>
-                        </tbody>
-                    </table>
-                </el-card>
             </el-col>
         </el-row>
     </div>
@@ -101,7 +90,7 @@
 
     } from "echarts/components";
     import VChart, { THEME_KEY } from "vue-echarts";
-    import 'echarts/theme/tech-blue'
+    import axios from "axios";
 
     import { ref, defineComponent } from "vue";
 
@@ -119,14 +108,14 @@
     export default defineComponent({
         name: "charts",
         components: {VChart},
-        provide: {[THEME_KEY]: "tech-blue"},
+        provide: {[THEME_KEY]: "light"},
         setup() {
             const line_option = ref({
                 tooltip: {
                     trigger: 'axis',
                 },
                 legend: {
-                    data: ['IBM','Visa','Google','Yahoo','JD','Apple','SoftBank']
+                    data: ['邮件营销', '联盟广告', '视频广告', '直接访问', '搜索引擎']
                 },
                 grid: {
                     left: '3%',
@@ -136,48 +125,66 @@
                 },
                 xAxis: [
                     {
-                        axisLabel: {interval:0, rotate:40},
                         type: 'category',
-                        data: ['2020-07-06', '2020-07-07', '2020-07-08', '2020-07-09', '2020-07-10', '2020-07-11', '2020-07-12']
+                        boundaryGap: false,
+                        data: ['周一', '周二', '周三', '周四', '周五', '周六', '周日']
                     }
                 ],
-                yAxis: [{type: 'value',}],
+                yAxis: [
+                    {
+                        type: 'value'
+                    }
+                ],
                 series: [
                     {
-                        name: 'IBM',
+                        name: '邮件营销',
                         type: 'line',
+                        stack: '总量',
+                        areaStyle: {},
                         emphasis: {focus: 'series'},
-                        data: [120, 0, 20, -30, 90, 230, 420]
+                        data: [120, 132, 101, 134, 90, 230, 210]
                     },
                     {
-                        name: 'Visa',
+                        name: '联盟广告',
                         type: 'line',
+                        stack: '总量',
+                        areaStyle: {},
                         emphasis: {focus: 'series'},
-                        data: [-20, 180, 40,-10, -60, -100, 50]
+                        data: [220, 182, 191, 234, 290, 330, 310]
                     },
                     {
-                        name: 'Google',
+                        name: '视频广告',
                         type: 'line',
-                        emphasis: {focus: 'series'},
-                        data: [250, 232, 201, 154, 190, 230, 310]
+                        stack: '总量',
+                        areaStyle: {},
+                        emphasis: {
+                            focus: 'series'
+                        },
+                        data: [150, 232, 201, 154, 190, 330, 410]
                     },
                     {
-                        name: 'Yahoo',
+                        name: '直接访问',
                         type: 'line',
-                        emphasis: {focus: 'series'},
-                        data: [30, 60,90,40,10, -40,-60]
+                        stack: '总量',
+                        areaStyle: {},
+                        emphasis: {
+                            focus: 'series'
+                        },
+                        data: [320, 332, 301, 334, 390, 330, 320]
                     },
                     {
-                        name: 'Apple',
+                        name: '搜索引擎',
                         type: 'line',
-                        emphasis: {focus: 'series'},
-                        data: [0, 0, 20, 0, -50, -20,0]
-                    },
-                    {
-                        name: 'SoftBank',
-                        type: 'line',
-                        emphasis: {focus: 'series'},
-                        data: [-40, 100, 210, 0, 0, -40, 20]
+                        stack: '总量',
+                        label: {
+                            show: true,
+                            position: 'top'
+                        },
+                        areaStyle: {},
+                        emphasis: {
+                            focus: 'series'
+                        },
+                        data: [820, 932, 901, 934, 1290, 1330, 1320]
                     }
                 ]
             });
@@ -190,21 +197,20 @@
                 legend: {
                     orient: "vertical",
                     left: "left",
-                    data: ['IBM','Visa','Google','Yahoo','Apple','SoftBank']
+                    data: ["Direct", "Email", "Ad Networks", "Video Ads", "Search Engines"]
                 },
                 series: [
                     {
-                        name: "Pie model - manager_id=1",
+                        name: "Traffic Sources",
                         type: "pie",
                         radius: "55%",
                         center: ["50%", "60%"],
                         data: [
-                            {value: 335, name: "IBM"},
-                            {value: 310, name: "Visa"},
-                            {value: 234, name: "Google"},
-                            {value: 135, name: "Yahoo"},
-                            {value: 1548, name: "Apple"},
-                            {value: 548, name: "SoftBank"}
+                            {value: 335, name: "Direct"},
+                            {value: 310, name: "Email"},
+                            {value: 234, name: "Ad Networks"},
+                            {value: 135, name: "Video Ads"},
+                            {value: 1548, name: "Search Engines"}
                         ],
                         emphasis: {
                             itemStyle: {
@@ -219,33 +225,21 @@
 
             const pie_option2 = ref({
                 legend: {
-                    trigger: 'axis',
-                    top:'top',
-                    data: ['IBM','Visa','Google','Yahoo','JD','Apple','SoftBank']
-                },
-                tooltip: {
-                    trigger: "item",
-                    formatter: "{a} <br/>{b} : {c} ({d}%)"
+                    orient: "vertical",
+                    left: "left",
+                    data: []
                 },
                 series: [
                     {
-                        name: "nightingale model - fund_id=1",
+                        name: "nightingale model",
                         type: "pie",
-                        radius: ['10%','80%'],
+                        radius: [20, 100],
                         center: ["50%", "60%"],
                         roseType: 'area',
                         itemStyle: {
-                            borderRadius: 2
+                            borderRadius: 6
                         },
-                        data: [
-                            {value:820,name:'IBM'},
-                            {value:1120,name:'Visa'},
-                            {value:6000,name:'Google'},
-                            {value:3420,name:'Yahoo'},
-                            {value:1020,name:'JD'},
-                            {value:5600,name:'Apple'},
-                            {value:2320,name:'SoftBank'}
-                        ],
+                        data: [],
                         emphasis: {
                             itemStyle: {
                                 shadowBlur: 10,
@@ -256,77 +250,39 @@
                     }
                 ]
             });
-            const funds=[
-                {name:'Olympic Memorial Fund',price:'25.45$',change:'+9.02'},
-                {name:'UK Overseas Income Fund',price:'15.32$',change:'-2.55'},
-                {name:'North America Growth',price:'10.23$',change:'-1.12'},
-                {name:'Fuji Memorial Fund',price:'5.21$',change:'-6.56'},
-                {name:'Global Tech Fund',price:'35.21$',change:'+5.55'},
-                {name:'North America Tech Fund',price:'12.33$',change:'-6.54'},
-                {name:'NAM Overseas Income Fund',price:'18.64$',change:'-9.54'},
-                {name:'APAC Tech Fund',price:'8.34$',change:'+0.66'},
-                {name:'APAC United Growth',price:'4.23$',change:'-4.34'},
-                {name:'JYP Memorial Fund',price:'4.98$',change:'-2.33'},
-                {name:'National Development Fund',price:'5.87$',change:'-7.45'},
-                {name:'Spark Program Fund',price:'12.80$',change:'+2.56'},
-                {name:'State Key Lab Fund',price:'11.69$',change:'+1.22'},
-                {name:'EUR Innovation Fund',price:'5.65$',change:'-5.45'},
-                {name:'EUR Mutual Fund',price:'3.21$',change:'-8.76'},
-                {name:'European Union Tech Fund',price:'15.55$',change:'+3.45'},
-                {name:'EUR Overseas Income Fund',price:'18.66$',change:'+5.21'},
-            ];
+            const fund_quant = ref([]);
 
-            return {line_option, pie_option1,pie_option2,funds};
+            const fundQuant=()=>{
+                axios.get(`http://devopsapac48.conygre.com:8080/managers/1/fundQuant`)
+                    .then(function (resp) {
+                        fund_quant.value=resp.data;
+                    })
+                return fund_quant
+            };
+            const securityQuant=()=>{
+                axios.get(`http://devopsapac48.conygre.com:8080/managers/1/securityQuant`)
+                    .then(function (resp) {
+                        securityquant=resp.data;
+                    })
+                console.log(securityquant)
+            };
+            // let fund_quant=fundQuant();
+
+            return { fund_quant,line_option, pie_option1,pie_option2 };
         },
+        // created(){
+        //     var fund_quant=-1;
+        //     axios.get(`http://devopsapac48.conygre.com:8080/managers/1/fundQuant`)
+        //         .then(function (resp) {
+        //             fund_quant=resp.data;
+        //         })
+        //     return fund_quant
+        // }
+
     });
 </script>
 
 <style scoped>
-    table {
-        border-collapse: collapse;
-        border-spacing: 0;
-        margin:0 auto;
-    }
-
-    td,th {
-        padding: 0;
-    }
-    .pure-table {
-        position: center;
-        border-collapse: collapse;
-        border-spacing: 0;
-        empty-cells: show;
-    }
-
-    .pure-table caption {
-        color: #000;
-        font: italic 85%/1 arial,sans-serif;
-        padding: 1em 0;
-        text-align: center;
-    }
-
-    .pure-table td,.pure-table th {
-        border-bottom: 1px solid #cbcbcb;
-        border-width:1px;
-        font-size: inherit;
-        text-align: center;
-        margin: 0;
-        padding: .5em 1em;
-    }
-
-    .pure-table thead {
-        background-color: #e0e0e0;
-        color: #000;
-        text-align: left;
-        vertical-align: bottom;
-    }
-
-    .pure-table td {
-        background-color: transparent;
-        padding:1.2em 1em 1.2em 1em;
-        font-size:14px;
-        text-align: center;
-    }
     .chart {
         height: 300px;
     }
