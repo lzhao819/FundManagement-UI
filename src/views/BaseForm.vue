@@ -195,20 +195,20 @@ export default {
       // tableData.value = res.list;
       });
     }
-          axios.post('http://devopsapac48.conygre.com:8080/positions/1', {
-            security_id: 1,  //API测试后改为form.date
-            position_id: 10000,
-            quantity: 666,
-            date_purchased: '2021-8-27',
-            funds_fund_id: 1
-          })
-              .then(function (response) {
-                console.log(response);
-                ElMessage.success("Transaction Complete！");
-              })
-              .catch(function (error) {
-                console.log(error);
-              });
+          // axios.post('http://devopsapac48.conygre.com:8080/positions/1', {
+          //   security_id: 1,  //API测试后改为form.date
+          //   position_id: 10000,
+          //   quantity: 666,
+          //   date_purchased: '2021-8-27',
+          //   funds_fund_id: 1
+          // })
+          //     .then(function (response) {
+          //       console.log(response);
+          //       ElMessage.success("Transaction Complete！");
+          //     })
+          //     .catch(function (error) {
+          //       console.log(error);
+          //     });
 
         // } else {
         //   return false;

@@ -5,7 +5,8 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "serve": "vite preview"
+    "serve": "vite preview",
+    "deploy": "node scripts/gh-pages-deploy.js"
   },
   "dependencies": {
     "axios": "^0.21.1",
@@ -24,6 +25,7 @@
   "devDependencies": {
     "@vitejs/plugin-vue": "^1.2.3",
     "@vue/compiler-sfc": "^3.1.2",
+    "execa": "^5.1.1",
     "vite": "^2.5.1"
   },
   "browserslist": [

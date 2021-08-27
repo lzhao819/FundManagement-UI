@@ -5,5 +5,6 @@ export default {
     plugins: [vue()],
     optimizeDeps: {
         include: ['schart.js']
-    }
+    },
+    publicPath: '/FundManagement-UI/'
 }

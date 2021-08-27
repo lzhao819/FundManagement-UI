@@ -163,21 +163,21 @@ export default {
                 type: "warning",
             })
                 .then(() => {
-                  axios.delete('http://devopsapac48.conygre.com:8080/positions/'+ 1, {
-                    security_id: 1,  //API测试后改为form.date
-                    position_id: 10000,
-                    quantity: 666,
-                    date_purchased: '2021-8-27',
-                    funds_fund_id: 1
-                })
-                    .then(function (response) {
-                    console.log(response);
-                    ElMessage.success("sold out!");
-                    tableData.value.splice(index, 1);
-                    })
-                    .catch(function (error) {
-                    console.log(error);
-                    });
+                //   axios.delete('http://devopsapac48.conygre.com:8080/positions/'+ 1, {
+                //     security_id: 1,  //API测试后改为form.date
+                //     position_id: 10000,
+                //     quantity: 666,
+                //     date_purchased: '2021-8-27',
+                //     funds_fund_id: 1
+                // })
+                //     .then(function (response) {
+                //     console.log(response);
+                //     ElMessage.success("sold out!");
+                //     tableData.value.splice(index, 1);
+                //     })
+                //     .catch(function (error) {
+                //     console.log(error);
+                //     });
                   ElMessage.success("sold out successfully!");
                   // this.tableData[index].flag = false;
                   // // this.tables = JSON.parse(JSON.stringify(this.tables)); // 如果不转化 页面不生效
