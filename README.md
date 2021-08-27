@@ -12,6 +12,8 @@
   <a href="https://github.com/lin-xin/vue-manage-system/releases">
  
 Framework: Vue3 + Element Plus
+    
+    
 [Click Here to View Main Page](https://lzhao819.github.io/FundManagement-UI/)
 
 ## Contributors
