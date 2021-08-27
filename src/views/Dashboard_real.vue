@@ -94,6 +94,9 @@
 
     import { ref, defineComponent } from "vue";
 
+    var fund_quant;
+    var security_quant;
+
     use([
         CanvasRenderer,
         PieChart,
@@ -109,6 +112,10 @@
         name: "charts",
         components: {VChart},
         provide: {[THEME_KEY]: "light"},
+        data(){
+            return{fund_quant,security_quant}
+        },
+        watch: {},
         setup() {
             const line_option = ref({
                 tooltip: {
@@ -250,35 +257,20 @@
                     }
                 ]
             });
-            const fund_quant = ref([]);
 
-            const fundQuant=()=>{
-                axios.get(`http://devopsapac48.conygre.com:8080/managers/1/fundQuant`)
-                    .then(function (resp) {
-                        fund_quant.value=resp.data;
-                    })
-                return fund_quant
-            };
-            const securityQuant=()=>{
-                axios.get(`http://devopsapac48.conygre.com:8080/managers/1/securityQuant`)
-                    .then(function (resp) {
-                        securityquant=resp.data;
-                    })
-                console.log(securityquant)
-            };
-            // let fund_quant=fundQuant();
 
-            return { fund_quant,line_option, pie_option1,pie_option2 };
+            return {line_option, pie_option1,pie_option2 };
         },
-        // created(){
-        //     var fund_quant=-1;
-        //     axios.get(`http://devopsapac48.conygre.com:8080/managers/1/fundQuant`)
-        //         .then(function (resp) {
-        //             fund_quant=resp.data;
-        //         })
-        //     return fund_quant
-        // }
-
+        created() {
+                axios.get("http://devopsapac48.conygre.com:8080/managers/1/fundQuant/").then(res=>{
+                this.fund_quant = res.data;
+                })
+                axios.get("http://devopsapac48.conygre.com:8080/managers/1/securityQuant").then(res=>{
+                this.security_quant = res.data;
+                })
+            },
+        //生命周期 - 挂载完成（可以访问DOM元素）
+        mounted() {},   
     });
 </script>
 

@@ -8,7 +8,7 @@
                             <div class="grid-content grid-con-2">
                                 <i class="el-icon-lx-punch grid-con-icon"></i>
                                 <div class="grid-cont-right">
-                                    <div class="grid-num">18</div>
+                                    <div class="grid-num">{{fund_quant}}</div>
                                     <div>Funds</div>
                                 </div>
                             </div>
@@ -19,7 +19,7 @@
                             <div class="grid-content grid-con-3">
                                 <i class="el-icon-lx-apps grid-con-icon"></i>
                                 <div class="grid-cont-right">
-                                    <div class="grid-num">6</div>
+                                    <div class="grid-num">{{security_quant}}</div>
                                     <div>Securities</div>
                                 </div>
                             </div>
@@ -98,13 +98,10 @@
         TooltipComponent,
         LegendComponent,
         AxisPointerComponent,
-
     } from "echarts/components";
     import VChart, { THEME_KEY } from "vue-echarts";
     import 'echarts/theme/tech-blue'
-
     import { ref, defineComponent } from "vue";
-
     use([
         CanvasRenderer,
         PieChart,
@@ -115,11 +112,18 @@
         TooltipComponent,
         LegendComponent
     ]);
+    var fund_quant;
+    var security_quant;
 
     export default defineComponent({
         name: "charts",
         components: {VChart},
         provide: {[THEME_KEY]: "tech-blue"},
+        data(){
+            return{fund_quant,security_quant}
+        },
+        watch: {},
+
         setup() {
             const line_option = ref({
                 tooltip: {
@@ -181,7 +185,6 @@
                     }
                 ]
             });
-
             const pie_option1 = ref({
                 tooltip: {
                     trigger: "item",
@@ -216,7 +219,6 @@
                     }
                 ]
             });
-
             const pie_option2 = ref({
                 legend: {
                     trigger: 'axis',
@@ -275,9 +277,18 @@
                 {name:'European Union Tech Fund',price:'15.55$',change:'+3.45'},
                 {name:'EUR Overseas Income Fund',price:'18.66$',change:'+5.21'},
             ];
-
             return {line_option, pie_option1,pie_option2,funds};
         },
+        // created() {
+        //         axios.get("http://devopsapac48.conygre.com:8080/managers/1/fundQuant").then(res=>{
+        //         this.fund_quant = res.data;
+        //         })
+        //         axios.get("http://devopsapac48.conygre.com:8080/managers/1/securityQuant").then(res=>{
+        //         this.security_quant = res.data;
+        //         })
+        //     },
+            //生命周期 - 挂载完成（可以访问DOM元素）
+        //mounted() {},   
     });
 </script>
 
@@ -287,7 +298,6 @@
         border-spacing: 0;
         margin:0 auto;
     }
-
     td,th {
         padding: 0;
     }
@@ -297,14 +307,12 @@
         border-spacing: 0;
         empty-cells: show;
     }
-
     .pure-table caption {
         color: #000;
         font: italic 85%/1 arial,sans-serif;
         padding: 1em 0;
         text-align: center;
     }
-
     .pure-table td,.pure-table th {
         border-bottom: 1px solid #cbcbcb;
         border-width:1px;
@@ -313,14 +321,12 @@
         margin: 0;
         padding: .5em 1em;
     }
-
     .pure-table thead {
         background-color: #e0e0e0;
         color: #000;
         text-align: left;
         vertical-align: bottom;
     }
-
     .pure-table td {
         background-color: transparent;
         padding:1.2em 1em 1.2em 1em;
@@ -330,25 +336,21 @@
     .chart {
         height: 300px;
     }
-
     .grid-content {
         display: flex;
         align-items: center;
         height: 100px;
     }
-
     .grid-cont-right {
         flex: 1;
         text-align: center;
         font-size: 14px;
         color: #999;
     }
-
     .grid-num {
         font-size: 30px;
         font-weight: bold;
     }
-
     .grid-con-icon {
         font-size: 50px;
         width: 100px;
@@ -357,40 +359,31 @@
         line-height: 100px;
         color: #fff;
     }
-
     .grid-con-1 .grid-con-icon {
         background: steelblue;
     }
-
     .grid-con-1 .grid-num {
         color: steelblue;
     }
-
     .grid-con-2 .grid-con-icon {
         background: darkseagreen;
     }
-
     .grid-con-2 .grid-num {
         color: darkseagreen;
     }
-
     .grid-con-3 .grid-con-icon {
         background: darksalmon;
     }
-
     .grid-con-3 .grid-num {
         color: darksalmon;
     }
-
     .user-info-cont div:first-child {
         font-size: 30px;
         color: #222;
     }
-
     .user-info-list span {
         margin-left: 70px;
     }
-
     .mgb20 {
         margin-bottom: 20px;
     }
@@ -409,7 +402,6 @@
         font-size: inherit;
         text-rendering: auto;
     }
-
     body {
         margin: 0;
     }

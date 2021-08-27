@@ -14,6 +14,7 @@
     "vue": "^3.1.2",
     "vue-axios": "^3.2.5",
     "vue-cropperjs": "^5.0.0",
+    "vue-echarts": "^6.0.0",
     "vue-i18n": "^9.0.0",
     "vue-router": "^4.0.10",
     "vue-schart": "^2.0.0",
@@ -21,9 +22,9 @@
     "wangeditor": "^4.7.4"
   },
   "devDependencies": {
-    "vite": "2.3.7",
     "@vitejs/plugin-vue": "^1.2.3",
-    "@vue/compiler-sfc": "^3.1.2"
+    "@vue/compiler-sfc": "^3.1.2",
+    "vite": "^2.5.1"
   },
   "browserslist": [
     "> 1%",
