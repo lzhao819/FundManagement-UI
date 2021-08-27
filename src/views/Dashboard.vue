@@ -35,7 +35,8 @@
                             <div class="grid-content grid-con-3">
                                 <i class="el-icon-s-goods grid-con-icon"></i>
                                 <div class="grid-cont-right">
-                                    <el-form v-model="security_quant" class="grid-num"></el-form>
+                                    <!-- <el-form v-model="security_quant" class="grid-num"></el-form> -->
+                                    <div class="grid-num">{{security_quant}}</div>
                                     <div>Securities</div>
                                 </div>
                             </div>
@@ -112,15 +113,10 @@
         name: "charts",
         components: {VChart},
         provide: {[THEME_KEY]: "light"},
-        beforeCreate(){
-            axios.get(`http://localhost:8080/managers/1/fundQuant`)
-                .then(function (resp) {
-                    fund_quant=resp.data;
-                    console.log(fund_quant);
-                    security_quant=1;
-                })
-                return {fund_quant, security_quant};
+        data(){
+            return{fund_quant,security_quant}
         },
+        watch: {},
     
         setup() {
 
@@ -274,14 +270,18 @@
                 ]
             });
 
-            // axios.get(`http://localhost:8080/managers/1/quantityQuant`)
-            //     .then(function (resp) {
-            //         quantity_quant=resp.data;
-            //         console.log(quantity_quant);
-            //     })
         return{ line_option, pie_option1,pie_option2 };
         },
-       
+          created() {
+                axios.get("http://devopsapac48.conygre.com:8080/managers/1/fundQuant").then(res=>{
+                this.fund_quant = res.data;
+                })
+                axios.get("http://localhost:8080/managers/1/securityQuant").then(res=>{
+                this.security_quant = res.data;
+                })
+            },
+            //生命周期 - 挂载完成（可以访问DOM元素）
+            mounted() {},    
 
     });
 </script>
