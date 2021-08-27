@@ -6,5 +6,5 @@ export default {
     optimizeDeps: {
         include: ['schart.js']
     },
-    publicPath: '/FundManagement-UI/'
+    publicPath: "/FundManagement-UI/"
 }
