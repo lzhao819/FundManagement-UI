@@ -5,15 +5,12 @@
             <i v-if="!collapse" class="el-icon-s-fold"></i>
             <i v-else class="el-icon-s-unfold"></i>
         </div>
-        <div class="logo">Fund Manager</div>
+        <div class="logo">Mei Fung</div>
         <div class="header-right">
             <div class="header-user-con">
-                <!-- 消息中心 -->
-                <div class="btn-bell">
-                    <el-tooltip effect="dark" placement="bottom">
-                        <router-link to="/tabs"></router-link>
-                    </el-tooltip>
-                </div>
+                <a href="https://www.citigroup.com/citi/">
+                    <img class="img-responsive" src="public\citilogo.png">
+                </a>
             </div>
         </div>
     </div>
@@ -47,7 +44,12 @@ export default {
     },
 };
 </script>
-<style scoped>
+<style scoped>.img-responsive {
+        display: inline-block;
+        max-width: 100%;
+    overflow:hidden;
+    height:60px;
+    }
 .header {
     position: relative;
     box-sizing: border-box;
@@ -55,6 +57,7 @@ export default {
     height: 70px;
     font-size: 22px;
     color: #fff;
+    border-bottom: 5px solid gainsboro;
 }
 .collapse-btn {
     float: left;
@@ -69,12 +72,15 @@ export default {
 }
 .header-right {
     float: right;
-    padding-right: 50px;
 }
 .header-user-con {
     display: flex;
-    height: 70px;
+    height: auto;
     align-items: center;
+    background-size: contain;
+    background-color: white;
+    border-right: 50px solid white ;
+    border-left:50px solid white;
 }
 .btn-fullscreen {
     transform: rotate(45deg);

@@ -5,7 +5,7 @@
                 <el-row :gutter="20" class="mgb20">
                     <el-col :span="8">
                         <el-card shadow="hover" :body-style="{ padding: '0px' }">
-                            <div class="grid-content grid-con-2">
+                            <div class="grid-content grid-con-3">
                                 <i class="el-icon-lx-punch grid-con-icon"></i>
                                 <div class="grid-cont-right">
                                     <div class="grid-num">18</div>
@@ -16,7 +16,7 @@
                     </el-col>
                     <el-col :span="8">
                         <el-card shadow="hover" :body-style="{ padding: '0px' }">
-                            <div class="grid-content grid-con-3">
+                            <div class="grid-content grid-con-2">
                                 <i class="el-icon-lx-apps grid-con-icon"></i>
                                 <div class="grid-cont-right">
                                     <div class="grid-num">6</div>
@@ -367,19 +367,19 @@
     }
 
     .grid-con-2 .grid-con-icon {
-        background: darkseagreen;
+        background: royalblue;
     }
 
     .grid-con-2 .grid-num {
-        color: darkseagreen;
+        color:royalblue;
     }
 
     .grid-con-3 .grid-con-icon {
-        background: darksalmon;
+        background: lightsteelblue;
     }
 
     .grid-con-3 .grid-num {
-        color: darksalmon;
+        color:lightsteelblue;
     }
 
     .user-info-cont div:first-child {
