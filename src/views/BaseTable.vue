@@ -102,6 +102,7 @@ export default {
               .then(function (res) {
                 console.log(res);
                 tableData.value = res.data;
+                console.log(res.data);
               })
               .catch(function (error) {
                 console.log(error);
