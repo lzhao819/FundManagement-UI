@@ -5,11 +5,11 @@
             <i v-if="!collapse" class="el-icon-s-fold"></i>
             <i v-else class="el-icon-s-unfold"></i>
         </div>
-        <div class="logo">Mei Fung</div>
+        <div class="logo">Welcome, Mei Fung!</div>
         <div class="header-right">
             <div class="header-user-con">
                 <a href="https://www.citigroup.com/citi/">
-                    <img class="img-responsive" src="public\citilogo.png">
+                    <img class="img-responsive" src="https://www.citigroup.com/citi/assets/img/brand/citi-logo-no-r.png">
                 </a>
             </div>
         </div>
@@ -45,10 +45,11 @@ export default {
 };
 </script>
 <style scoped>.img-responsive {
-        display: inline-block;
-        max-width: 100%;
-    overflow:hidden;
-    height:60px;
+    display: block !important;
+    position: absolute;
+    z-index: 10;
+    top: 10px;
+    left: 92%;
     }
 .header {
     position: relative;
@@ -57,7 +58,7 @@ export default {
     height: 70px;
     font-size: 22px;
     color: #fff;
-    border-bottom: 5px solid gainsboro;
+    border-bottom: 1px solid gainsboro;
 }
 .collapse-btn {
     float: left;
@@ -78,9 +79,6 @@ export default {
     height: auto;
     align-items: center;
     background-size: contain;
-    background-color: white;
-    border-right: 50px solid white ;
-    border-left:50px solid white;
 }
 .btn-fullscreen {
     transform: rotate(45deg);

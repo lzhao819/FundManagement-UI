@@ -3,7 +3,7 @@
         <div class="crumbs">
             <el-breadcrumb separator="/">
                 <el-breadcrumb-item>
-                    <i class="el-icon-lx-cascades"></i> sold record
+                    <i class="el-icon-lx-cascades"></i> Order Records
                 </el-breadcrumb-item>
             </el-breadcrumb>
         </div>
@@ -13,13 +13,13 @@
 <!--                    <el-option key="1" label="广东省" value="广东省"></el-option>-->
 <!--                    <el-option key="2" label="湖南省" value="湖南省"></el-option>-->
 <!--                </el-select>-->
-                <el-input v-model="query.name" placeholder="manager_id" class="handle-input mr10"></el-input>
-                <el-button type="primary" icon="el-icon-search" @click="handleSearch">search</el-button>
+                <el-input v-model="query.name" placeholder="Fund Name" class="handle-input mr10"></el-input>
+                <el-button type="primary" icon="el-icon-search" @click="handleSearch">Search</el-button>
             </div>
             <el-table :data.sync="tableData" :key="Math.random()" border class="table" ref="multipleTable" header-cell-class-name="table-header">
 
                 <el-table-column prop="ID" label="ID" width="55" align="center"></el-table-column>
-                <el-table-column prop="fundName" label="fundName"></el-table-column>
+                <el-table-column prop="fundName" label="Fund Name"></el-table-column>
 
 <!--                <el-table-column label="头像(查看大图)" align="center">-->
 <!--                    <template #default="scope">-->
@@ -27,7 +27,7 @@
 <!--                        </el-image>-->
 <!--                    </template>-->
 <!--                </el-table-column>-->
-                <el-table-column prop="quantity" label="quantity"></el-table-column>
+                <el-table-column prop="quantity" label="Quantity"></el-table-column>
 <!--                <el-table-column label="状态" align="center">-->
 <!--                    <template #default="scope">-->
 <!--                        <el-tag :type="-->
@@ -40,17 +40,17 @@
 <!--                    </template>-->
 <!--                </el-table-column>-->
 
-                <el-table-column prop="securityName" label="securityName"></el-table-column>
-                <el-table-column prop="date" label="purchaseDate"></el-table-column>
+                <el-table-column prop="securityName" label="Security Name"></el-table-column>
+                <el-table-column prop="date" label="Date Purchased"></el-table-column>
 <!--                <el-table-column label="交易数量">-->
 <!--                 <template #default="scope">{{ scope.row.money}}</template>-->
 <!--                </el-table-column>-->
-                <el-table-column label="operation" width="180" align="center">
+                <el-table-column label="Operation" width="180" align="center">
                     <template #default="scope">
-                        <el-button type="text" icon="el-icon-edit" @click="handleEdit(scope.$index, scope.row)">edit
+                        <el-button type="text" icon="el-icon-edit" @click="handleEdit(scope.$index, scope.row)">Update
                         </el-button>
                         <el-button type="text" icon="el-icon-delete" class="red"
-                            @click="handleDelete(scope.$index, scope.row)">sold out</el-button>
+                            @click="handleDelete(scope.$index, scope.row)">Sell</el-button>
                     </template>
                 </el-table-column>
             </el-table>
@@ -72,7 +72,7 @@
             </el-form>
             <template #footer>
                 <span class="dialog-footer">
-                    <el-button @click="editVisible = false">cancel</el-button>
+                    <el-button @click="editVisible = false">Cancel</el-button>
                     <el-button type="primary" @click="saveEdit">OK</el-button>
                 </span>
             </template>
@@ -159,25 +159,25 @@ export default {
         // 删除操作
         const handleDelete = (index, val) => {
             // 二次确认删除
-            ElMessageBox.confirm("Are you sure to sold out？", "prop", {
+            ElMessageBox.confirm("Are you sure to sold out？", "alert", {
                 type: "warning",
             })
                 .then(() => {
-                  axios.delete('/positions/'+ 1, {
-                       security_id: 1,  //API测试后改为form.date
-                       position_id: 10000,
-                       quantity: 666,
-                       date_purchased: '2021-8-27',
-                       funds_fund_id: 1
-                  })
-                      .then(function (response) {
-                        console.log(response);
-                        ElMessage.success("sold out!");
-                        tableData.value.splice(index, 1);
-                      })
-                      .catch(function (error) {
-                        console.log(error);
-                      });
+                  axios.delete('http://devopsapac48.conygre.com:8080/positions/'+ 1, {
+                    security_id: 1,  //API测试后改为form.date
+                    position_id: 10000,
+                    quantity: 666,
+                    date_purchased: '2021-8-27',
+                    funds_fund_id: 1
+                })
+                    .then(function (response) {
+                    console.log(response);
+                    ElMessage.success("sold out!");
+                    tableData.value.splice(index, 1);
+                    })
+                    .catch(function (error) {
+                    console.log(error);
+                    });
                   ElMessage.success("sold out successfully!");
                   // this.tableData[index].flag = false;
                   // // this.tables = JSON.parse(JSON.stringify(this.tables)); // 如果不转化 页面不生效

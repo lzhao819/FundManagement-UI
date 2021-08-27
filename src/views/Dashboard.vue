@@ -8,7 +8,7 @@
                             <div class="grid-content grid-con-3">
                                 <i class="el-icon-lx-punch grid-con-icon"></i>
                                 <div class="grid-cont-right">
-                                    <div class="grid-num">{{fund_quant}}</div>
+                                    <div class="grid-num">13</div>
                                     <div>Funds</div>
                                 </div>
                             </div>
@@ -19,7 +19,7 @@
                             <div class="grid-content grid-con-2">
                                 <i class="el-icon-lx-apps grid-con-icon"></i>
                                 <div class="grid-cont-right">
-                                    <div class="grid-num">{{security_quant}}</div>
+                                    <div class="grid-num">7</div>
                                     <div>Securities</div>
                                 </div>
                             </div>
@@ -30,8 +30,8 @@
                             <div class="grid-content grid-con-1">
                                 <i class="el-icon-lx-group grid-con-icon"></i>
                                 <div class="grid-cont-right">
-                                    <div class="grid-num">7</div>
-                                    <div>managers</div>
+                                    <div class="grid-num">80</div>
+                                    <div>Positions</div>
                                 </div>
                             </div>
                         </el-card>
@@ -70,9 +70,9 @@
                 <el-card shadow="hover" style="height:930px;overflow: scroll;">
                     <table class="pure-table">
                         <thead>
-                        <th>fund name</th>
-                        <th>price</th>
-                        <th>change</th>
+                        <th>Fund Name</th>
+                        <th>Price</th>
+                        <th>Change</th>
                         </thead>
                         <tbody v-for="fund in funds">
                         <td style="font-size: 12px;">{{fund.name}}</td>
@@ -119,10 +119,6 @@
         name: "charts",
         components: {VChart},
         provide: {[THEME_KEY]: "tech-blue"},
-        data(){
-            return{fund_quant,security_quant}
-        },
-        watch: {},
 
         setup() {
             const line_option = ref({
@@ -279,16 +275,6 @@
             ];
             return {line_option, pie_option1,pie_option2,funds};
         },
-        // created() {
-        //         axios.get("http://devopsapac48.conygre.com:8080/managers/1/fundQuant").then(res=>{
-        //         this.fund_quant = res.data;
-        //         })
-        //         axios.get("http://devopsapac48.conygre.com:8080/managers/1/securityQuant").then(res=>{
-        //         this.security_quant = res.data;
-        //         })
-        //     },
-            //生命周期 - 挂载完成（可以访问DOM元素）
-        //mounted() {},   
     });
 </script>
 
